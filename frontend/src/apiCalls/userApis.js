@@ -1,6 +1,6 @@
 const { api } = require("../config/Api")
 
-exports.getUserProfile = async (userId, token) => {
+export async function getUserProfile(userId, token) {
     return await fetch(
         `${api}/user/profile/${userId}`,
         {
@@ -18,7 +18,7 @@ exports.getUserProfile = async (userId, token) => {
     })
 }
 
-exports.getAllUsers = async (userId, token, keyword) => {
+export async function getAllUsers(userId, token, keyword) {
     return await fetch(
         `${api}/user/users?search=${keyword}`,
         {
@@ -36,7 +36,7 @@ exports.getAllUsers = async (userId, token, keyword) => {
     })
 }
 
-exports.findUser = async (token, keyword) => {
+export async function findUser(token, keyword) {
     return await fetch(
         `${api}/user/user?search=${keyword}`,
         {

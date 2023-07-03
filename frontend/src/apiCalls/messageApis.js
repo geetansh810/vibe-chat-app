@@ -1,6 +1,6 @@
 const { api } = require("../config/Api")
 
-exports.sendMessage = async (token, chatId, content) => {
+export async function sendMessage(token, chatId, content) {
     return await fetch(
         `${api}/message`,
         {
@@ -19,7 +19,7 @@ exports.sendMessage = async (token, chatId, content) => {
     })
 }
 
-exports.getAllMessages = async (token, chatId) => {
+export async function getAllMessages(token, chatId) {
     return await fetch(
         `${api}/message/${chatId}`,
         {

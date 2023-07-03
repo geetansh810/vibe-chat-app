@@ -1,6 +1,13 @@
 const { api } = require("../config/Api")
 
-exports.signup = async (signupDetails) => {
+export function isAuthenticated() {
+    if (typeof window != "undefined") {
+        return JSON.parse(localStorage.getItem("session"));
+    }
+    return false;
+};
+
+export async function signup(signupDetails) {
     console.log(signupDetails)
     return await fetch(
         `${api}/signup`,
@@ -20,7 +27,7 @@ exports.signup = async (signupDetails) => {
 
 }
 
-exports.signin = async (signinDetails) => {
+export async function signin(signinDetails) {
     return await fetch(
         `${api}/signin`,
         {
@@ -38,23 +45,16 @@ exports.signin = async (signinDetails) => {
 
 }
 
-exports.authenticate = (data, next) => {
+export function authenticate(data, next) {
     if (typeof window != "undefined") {
         localStorage.setItem("session", JSON.stringify(data));
         next();
     }
 };
-exports.signout = (next) => {
+export function signout(next) {
 
     if (typeof window != "undefined") {
         localStorage.removeItem("session");
         next();
     }
-};
-
-exports.isAuthenticated = () => {
-    if (typeof window != "undefined") {
-        return JSON.parse(localStorage.getItem("session"));
-    }
-    return false;
 };

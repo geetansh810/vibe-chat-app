@@ -1,6 +1,6 @@
 const { api } = require("../config/Api")
 
-exports.accessNewChat = async (token, userId) => {
+export async function accessNewChat(token, userId) {
     return await fetch(
         `${api}/chat`,
         {
@@ -19,7 +19,7 @@ exports.accessNewChat = async (token, userId) => {
     })
 }
 
-exports.getAllChats = async (token) => {
+export async function getAllChats(token) {
     return await fetch(
         `${api}/chat`,
         {
@@ -37,7 +37,7 @@ exports.getAllChats = async (token) => {
     })
 }
 
-exports.createGroupChat = async (token, users, chatName) => {
+export async function createGroupChat(token, users, chatName) {
     return await fetch(
         `${api}/chat/group`,
         {
@@ -56,7 +56,7 @@ exports.createGroupChat = async (token, users, chatName) => {
     })
 }
 
-exports.renameGroupChat = async (token, chatName, chatId) => {
+export async function renameGroupChat(token, chatName, chatId) {
     return await fetch(
         `${api}/chat/group/rename`,
         {
@@ -75,7 +75,7 @@ exports.renameGroupChat = async (token, chatName, chatId) => {
     })
 }
 
-exports.addUsersToGroupChat = async (token, chatId, userId) => {
+export async function addUsersToGroupChat(token, chatId, userId) {
     return await fetch(
         `${api}/chat/group/add`,
         {
@@ -94,7 +94,7 @@ exports.addUsersToGroupChat = async (token, chatId, userId) => {
     })
 }
 
-exports.removeUserFromGroupChat = async (token, chatId, userId) => {
+export async function removeUserFromGroupChat(token, chatId, userId) {
     return await fetch(
         `${api}/chat/group/remove`,
         {
