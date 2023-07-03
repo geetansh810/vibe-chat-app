@@ -34,7 +34,7 @@ const Conversation = ({ messages, isTyping, send, typingHandler, goToPage }) => 
             <div className="chat-area-header">
                 {
                     (window.innerWidth <= 780) &&
-                    <div className='btn' onClick={() => goToPage("chats")}>
+                    <div className='btn back-btn' onClick={() => goToPage("chats")}>
                         <i className="fa-solid fa-arrow-left"></i>
                     </div>
                 }
@@ -74,7 +74,7 @@ const Conversation = ({ messages, isTyping, send, typingHandler, goToPage }) => 
                     {
                         messages.length < 1 ?
                             <div className="d-flex align-items-center my-5 py-5">
-                                <h3 className='text-center m-auto text-secondary'><i className="fa-solid fa-ghost me-5"></i>Start your conversation<i className="fa-solid fa-ghost ms-5"></i></h3>
+                                <h3 className='text-center m-auto text-secondary'><i className="fa-solid fa-ghost me-2"></i>Start your conversation<i className="fa-solid fa-ghost ms-2"></i></h3>
                             </div>
                             :
                             <>

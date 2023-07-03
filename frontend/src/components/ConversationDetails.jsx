@@ -20,7 +20,7 @@ const ConversationDetails = ({ removeParticipant, goToPage }) => {
         <div className="detail-area" id='detailArea'>
             {
                 (window.innerWidth <= 780) &&
-                <div className='btn w-25 rounded-pill' onClick={() => goToPage("conversation")}>
+                <div className='btn rounded-pill back-btn' onClick={() => goToPage("conversation")}>
                     <i className="fa-solid fa-arrow-left"></i>
                 </div>
 
@@ -41,7 +41,7 @@ const ConversationDetails = ({ removeParticipant, goToPage }) => {
                 <div className="detail-title">
                     {
                         selectedChat.isGroupChat ?
-                            <button className='btn fw-bold' data-bs-placement="bottom" title="Edit Name"
+                            <button className='btn btn-light fw-bold' data-bs-placement="bottom" title="Edit Name"
                                 data-bs-toggle="modal" data-bs-target="#groupNameChangeModal"
                             >
                                 {selectedChat.chatName}
@@ -54,7 +54,15 @@ const ConversationDetails = ({ removeParticipant, goToPage }) => {
                                 selectedChat.users[0].firstName + " " + selectedChat.users[0].lastName
                     }
                 </div>
-                <div className="detail-subtitle">Created by {selectedChat.users[0].firstName} , {convertDate(selectedChat.createdAt)}</div>
+                <div className="detail-subtitle">Created by
+                    {
+                        selectedChat.isGroupChat ?
+                            " " + selectedChat.groupAdmin.firstName
+                            :
+                            " you"
+                    } , {convertDate(selectedChat.createdAt)}
+                </div>
+
                 <div className="detail-buttons">
                     <button className="detail-button">
                         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor" strokeWidth="0" strokeLinecap="round" strokeLinejoin="round" className="feather feather-phone">
@@ -109,12 +117,17 @@ const ConversationDetails = ({ removeParticipant, goToPage }) => {
                                                 <div className='d-flex flex-column'>
                                                     <div className="">{mem.email}</div>
                                                     <div className="msg-message">{mem.mobileNumber}
-                                                        <button className='btn btn-sm btn-outline-danger ms-2'
-                                                            onClick={() => { removeParticipant(mem._id) }}
-                                                        >
-                                                            Remove
-                                                            <i className="fas fa-trash ms-2"></i>
-                                                        </button>
+
+                                                        {
+                                                            selectedChat.groupAdmin._id !== mem._id &&
+                                                            <button className='btn btn-sm btn-outline-danger ms-2'
+                                                                onClick={() => { removeParticipant(mem._id) }}
+                                                            >
+                                                                Remove
+                                                                <i className="fas fa-trash ms-2"></i>
+                                                            </button>
+                                                        }
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -136,8 +149,18 @@ const ConversationDetails = ({ removeParticipant, goToPage }) => {
                             Details
                         </div>
                         <hr></hr>
-                        <div className="text-secondary">Email - {selectedChat.users[1].email}</div>
-                        <div className="text-secondary">Mobile - {selectedChat.users[1].mobileNumber}</div>
+                        <div className="text-secondary">Email - {
+                            userDetails._id === selectedChat.users[1]._id ?
+                                selectedChat.users[0].email
+                                :
+                                selectedChat.users[1].email
+
+                        }</div>
+                        <div className="text-secondary">Mobile - {
+                            userDetails._id === selectedChat.users[1]._id ?
+                                selectedChat.users[0].mobileNumber
+                                : selectedChat.users[0].mobileNumber
+                        }</div>
                     </>
 
                 )

@@ -36,20 +36,42 @@ const Modals = ({ newChat, changeGrpName, addParticipants, createNewGroupChat })
     }
 
     const addMember = (member) => {
-        console.log(member);
-        console.log(groupMembers);
+        // console.log(member);
+        // console.log(groupMembers);
+
+        const res = groupMembers.some((mem) => {
+            return mem._id === member._id
+        })
+
+        setUsers([])
+        setSearchText("")
+        // console.log(res);
+
+        if (res) {
+            toast("Member already added");
+            return
+        }
+
+        setGroupMembers([...groupMembers, member])
+    }
+
+    const addMemberToGroup = (member) => {
+        // console.log(member);
+        // console.log(groupMembers);
 
         const res = selectedChat.users.some((mem) => {
             return mem._id === member._id
         })
 
+        // console.log(res);
         setUsers([])
-        console.log(res);
+        setSearchText("")
+
         if (res) {
             toast("Member already added");
             return
         }
-        setSearchText("")
+
         setGroupMembers([...groupMembers, member])
     }
 
@@ -78,7 +100,12 @@ const Modals = ({ newChat, changeGrpName, addParticipants, createNewGroupChat })
                                     <div class="cards">
                                         <div class="imgBox">
                                             <img
-                                                src={selectedChat.isGroupChat ? groupImage : selectedChat.users[1].photo}
+                                                src={
+                                                    selectedChat.isGroupChat ? groupImage :
+                                                        selectedChat.users[0]._id === userDetails._id ?
+                                                            selectedChat.users[1].photo
+                                                            : selectedChat.users[0].photo
+                                                }
                                                 alt='profileImage'
                                             />
                                         </div>
@@ -89,7 +116,9 @@ const Modals = ({ newChat, changeGrpName, addParticipants, createNewGroupChat })
                                                         selectedChat.isGroupChat ?
                                                             selectedChat.chatName
                                                             :
-                                                            selectedChat.users[1].firstName + " " + selectedChat.users[1].lastName
+                                                            selectedChat.users[0]._id === userDetails._id ?
+                                                                selectedChat.users[1].firstName + " " + selectedChat.users[1].lastName
+                                                                : selectedChat.users[0].firstName + " " + selectedChat.users[0].lastName
                                                     }
                                                 </h2>
                                                 {/* <ul class="social_icons">
@@ -151,7 +180,7 @@ const Modals = ({ newChat, changeGrpName, addParticipants, createNewGroupChat })
                                                             <ul className='searchOptions'>
                                                                 {
                                                                     users.map((item, index) =>
-                                                                        <li key={index} onClick={() => { addMember(item) }} className='searchOption'>
+                                                                        <li key={index} onClick={() => { addMemberToGroup(item) }} className='searchOption'>
                                                                             <img src={item.photo} alt="" className='searchOptionImage' />
                                                                             <span>{item.firstName + " " + item.lastName}</span>
                                                                         </li>
@@ -177,7 +206,12 @@ const Modals = ({ newChat, changeGrpName, addParticipants, createNewGroupChat })
 
                                             </div>
                                             <div className='modal-footer'>
-                                                <button type="button" className="btn btn-success mx-auto px-5" data-bs-dismiss="modal" onClick={() => addParticipants(groupMembers)}>Add</button>
+                                                <button type="button" className="btn btn-success mx-auto px-5" data-bs-dismiss="modal" onClick={() => {
+                                                    addParticipants(groupMembers)
+                                                    setSearchText("")
+                                                    setUsers([])
+                                                    setGroupMembers([])
+                                                }}>Add</button>
                                             </div>
                                         </>
                                         :
@@ -275,7 +309,11 @@ const Modals = ({ newChat, changeGrpName, addParticipants, createNewGroupChat })
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-outline-success m-auto" data-bs-dismiss="modal" onClick={createNewGroupChat}>Create Group</button>
+                            <button type="button" className="btn btn-outline-success m-auto" data-bs-dismiss="modal" onClick={() => {
+                                createNewGroupChat(groupMembers, groupName)
+                                setUsers([])
+                                setGroupMembers([])
+                            }}>Create Group</button>
                         </div>
                     </div>
                 </div>

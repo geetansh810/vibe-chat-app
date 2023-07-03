@@ -252,7 +252,7 @@ const Home = ({ loader }) => {
                 toast(data.error)
                 return
             }
-            dispatch(setChats([...chats, data]))
+            dispatch(setChats([data, ...chats]))
             dispatch(setSelectedChat(data));
 
         }).catch(err => {

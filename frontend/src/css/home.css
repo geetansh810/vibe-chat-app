@@ -594,6 +594,7 @@ html {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 10px;
+    color: var(--body-color);
 }
 
 .detail-subtitle {
@@ -856,7 +857,7 @@ html {
 @media (max-width: 780px) {
 
     .app {
-        height: 95vh;
+        height: 93vh;
     }
 
     .pageShow {
@@ -882,7 +883,7 @@ html {
     }
 
     .logo {
-        width: 9em;
+        width: 10em;
     }
 
     .logo img {
@@ -891,6 +892,13 @@ html {
 
     .chat-msg-text {
         max-width: 75vw;
+    }
+
+    .back-btn {
+        background: var(--body-color);
+        color: var(--body-bg-color);
+        width: min-content;
+        padding: 10px 15px;
     }
 }
 
