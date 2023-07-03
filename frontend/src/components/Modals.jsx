@@ -189,97 +189,99 @@ const Modals = ({ newChat, changeGrpName, addParticipants, createNewGroupChat })
                             </div>
                         </div>
                     </div>
-
-                    <div className="modal fade" id="newChatModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">New Chat</h5>
-                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div className="modal-body">
-                                    <div className="search-bar">
-                                        <input type="text" placeholder="Enter Email ID or Mobile Number" value={searchText} onChange={(e) => { getUser(e.target.value) }} />
-                                        {
-                                            users.length > 0 && (
-                                                <ul className='searchOptions'>
-                                                    {
-                                                        Object.keys(users).map((item, index) =>
-                                                            <li key={index} onClick={() => { setNewChat(users[item]._id) }} className='searchOption' data-bs-dismiss="modal" aria-label="Close">
-                                                                <img src={users[item].photo} alt="" className='searchOptionImage' />
-                                                                <span>{users[item].firstName + " " + users[item].lastName}</span>
-                                                            </li>
-                                                        )
-                                                    }
-                                                </ul>
-                                            )
-                                        }
-
-                                    </div>
-                                </div>
-                                <div className="modal-footer d-flex">
-                                    <button className="btn btn-light newGrpChat" data-bs-toggle="modal" data-bs-target="#newGroupModal" onClick={() => setUsers([])}>
-                                        <img src={groupChatIcon} alt='add' className='' />
-                                        <span>New Group</span>
-                                    </button>
-                                    {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button> */}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="modal fade" id="newGroupModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">New Group Chat</h5>
-                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div className="modal-body">
-                                    <p className=''>Group Name</p>
-                                    <input className='form-control' type='text' placeholder='Enter Group Name' value={groupName} onChange={(e) => setGroupName(e.target.value)} />
-                                    <hr></hr>
-                                    <p className='mt-5'>Add Group Members</p>
-                                    <hr></hr>
-                                    <div className="search-bar">
-                                        <input type="text" className='bg-light' placeholder="Enter Email ID or Mobile Number" value={searchText} onChange={(e) => { getUser(e.target.value) }} />
-                                        {
-                                            users.length > 0 && (
-                                                <ul className='searchOptions'>
-                                                    {
-                                                        users.map((item, index) =>
-                                                            <li key={index} onClick={() => { addMember(item) }} className='searchOption'>
-                                                                <img src={item.photo} alt="" className='searchOptionImage' />
-                                                                <span>{item.firstName + " " + item.lastName}</span>
-                                                            </li>
-                                                        )
-                                                    }
-                                                </ul>
-                                            )
-                                        }
-                                    </div>
-                                    <div>
-                                        <p className='mt-5'>Selected Members</p>
-                                        <hr></hr>
-                                        {groupMembers && groupMembers.map((member) => {
-                                            return <button key={member._id} className="badge rounded-pill btn member-badge mx-2" onClick={() => { removeMember(member) }}>
-                                                <img className='badge-thumbanil' src={member.photo} alt='member_img' />
-                                                <span>
-                                                    {member.firstName + " " + member.lastName}
-                                                </span>
-                                                <i className="fa-solid fa-trash ms-2"></i>
-                                            </button>
-                                        })}
-                                    </div>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-outline-success m-auto" data-bs-dismiss="modal" onClick={createNewGroupChat}>Create Group</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </>
             }
+
+            <div className="modal fade" id="newChatModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">New Chat</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <div className="search-bar">
+                                <input type="text" placeholder="Enter Email ID or Mobile Number" value={searchText} onChange={(e) => { getUser(e.target.value) }} />
+                                {
+                                    users.length > 0 && (
+                                        <ul className='searchOptions'>
+                                            {
+                                                Object.keys(users).map((item, index) =>
+                                                    <li key={index} onClick={() => { setNewChat(users[item]._id) }} className='searchOption' data-bs-dismiss="modal" aria-label="Close">
+                                                        <img src={users[item].photo} alt="" className='searchOptionImage' />
+                                                        <span>{users[item].firstName + " " + users[item].lastName}</span>
+                                                    </li>
+                                                )
+                                            }
+                                        </ul>
+                                    )
+                                }
+
+                            </div>
+                        </div>
+                        <div className="modal-footer d-flex">
+                            <button className="btn btn-light newGrpChat" data-bs-toggle="modal" data-bs-target="#newGroupModal" onClick={() => setUsers([])}>
+                                <img src={groupChatIcon} alt='add' className='' />
+                                <span>New Group</span>
+                            </button>
+                            {/* <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button> */}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="modal fade" id="newGroupModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">New Group Chat</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <p className=''>Group Name</p>
+                            <input className='form-control' type='text' placeholder='Enter Group Name' value={groupName} onChange={(e) => setGroupName(e.target.value)} />
+                            <hr></hr>
+                            <p className='mt-5'>Add Group Members</p>
+                            <hr></hr>
+                            <div className="search-bar">
+                                <input type="text" className='bg-light' placeholder="Enter Email ID or Mobile Number" value={searchText} onChange={(e) => { getUser(e.target.value) }} />
+                                {
+                                    users.length > 0 && (
+                                        <ul className='searchOptions'>
+                                            {
+                                                users.map((item, index) =>
+                                                    <li key={index} onClick={() => { addMember(item) }} className='searchOption'>
+                                                        <img src={item.photo} alt="" className='searchOptionImage' />
+                                                        <span>{item.firstName + " " + item.lastName}</span>
+                                                    </li>
+                                                )
+                                            }
+                                        </ul>
+                                    )
+                                }
+                            </div>
+                            <div>
+                                <p className='mt-5'>Selected Members</p>
+                                <hr></hr>
+                                {groupMembers && groupMembers.map((member) => {
+                                    return <button key={member._id} className="badge rounded-pill btn member-badge mx-2" onClick={() => { removeMember(member) }}>
+                                        <img className='badge-thumbanil' src={member.photo} alt='member_img' />
+                                        <span>
+                                            {member.firstName + " " + member.lastName}
+                                        </span>
+                                        <i className="fa-solid fa-trash ms-2"></i>
+                                    </button>
+                                })}
+                            </div>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-outline-success m-auto" data-bs-dismiss="modal" onClick={createNewGroupChat}>Create Group</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div className="modal fade" id="profileImageModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content bg-dark">
