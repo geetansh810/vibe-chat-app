@@ -18,7 +18,8 @@ import plus from '../images/chat-white.png'
 import io from 'socket.io-client'
 import Modals from '../components/Modals'
 
-const ENDPOINT = "http://localhost:5000"
+// const ENDPOINT = "http://localhost:5000"
+const ENDPOINT = "https://vibe-chat-app.onrender.com"
 var socket, selectedChatCompare;
 
 
