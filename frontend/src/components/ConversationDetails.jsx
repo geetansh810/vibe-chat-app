@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 const ConversationDetails = ({ removeParticipant, goToPage }) => {
 
-    const { selectedChat } = useSelector((state) => state.user)
+    const { selectedChat, userDetails } = useSelector((state) => state.user)
 
     useEffect(() => {
         console.log("Chat updated");
@@ -30,7 +30,11 @@ const ConversationDetails = ({ removeParticipant, goToPage }) => {
                 <div className="msg-profile group" data-bs-toggle="modal" data-bs-target="#chatProfileModal">
                     {
                         < img className="chat-area-profile" src={
-                            selectedChat.isGroupChat ? groupImage : selectedChat.users[1].photo
+                            selectedChat.isGroupChat ? groupImage :
+                                selectedChat.users[0]._id === userDetails._id ?
+                                    selectedChat.users[1].photo
+                                    :
+                                    selectedChat.users[0].photo
                         } alt="groupImage" />
                     }
                 </div>
@@ -44,7 +48,10 @@ const ConversationDetails = ({ removeParticipant, goToPage }) => {
                                 <i className="fa-solid fa-pen-to-square ms-3"></i>
                             </button>
                             :
-                            selectedChat.users[1].firstName + " " + selectedChat.users[1].lastName
+                            selectedChat.users[0]._id === userDetails._id ?
+                                selectedChat.users[1].firstName + " " + selectedChat.users[1].lastName
+                                :
+                                selectedChat.users[0].firstName + " " + selectedChat.users[0].lastName
                     }
                 </div>
                 <div className="detail-subtitle">Created by {selectedChat.users[0].firstName} , {convertDate(selectedChat.createdAt)}</div>
