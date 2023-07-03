@@ -191,6 +191,9 @@ const Home = ({ loader }) => {
                 return chat._id === data._id
             })
             console.log(existingChat);
+            if (existingChat.length === 0) {
+                dispatch(setChats([data, ...chats]))
+            }
             dispatch(setSelectedChat(existingChat[0]))
             selectChat(existingChat)
         })

@@ -24,6 +24,11 @@ const Conversation = ({ messages, isTyping, send, typingHandler, goToPage }) => 
         typingHandler(true)
     }
 
+    const sendNewMessage = (content) => {
+        send(content)
+        setSenderMsg("")
+    }
+
     return (
         <div className="chat-area" id="chatArea">
             <div className="chat-area-header">
@@ -107,7 +112,7 @@ const Conversation = ({ messages, isTyping, send, typingHandler, goToPage }) => 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="feather feather-paperclip">
                     <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48" /></svg>
                 <input type="text" placeholder="Type something here..." value={senderMsg} onChange={(e) => inputChange(e.target.value)} onKeyDown={(e) => { keyPress(e) }} />
-                <button className='btn' onClick={() => send(senderMsg)}>
+                <button className='btn' onClick={() => sendNewMessage(senderMsg)}>
                     <img src={sent} width={30} alt='Enter' />
                 </button>
             </div>
