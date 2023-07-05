@@ -1,22 +1,24 @@
 {
   "files": {
-    "main.css": "/static/css/main.2b02c0be.css",
-    "main.js": "/static/js/main.f7bc9b60.js",
+    "main.css": "/static/css/main.b1ead002.css",
+    "main.js": "/static/js/main.b13a5b72.js",
     "static/media/chatting.gif": "/static/media/chatting.01c36a40b04cb0bb11e0.gif",
     "static/media/chat-gif.gif": "/static/media/chat-gif.43d9147185dd8a961655.gif",
+    "static/media/callRing.mp3": "/static/media/callRing.48773df5d5294d16472e.mp3",
     "static/media/group.png": "/static/media/group.9af147f62c3a42d105db.png",
     "static/media/user.png": "/static/media/user.4f0883d2791043a16843.png",
     "static/media/vibeLogo.svg": "/static/media/vibeLogo.b3e0fdb415b22af372da0b129bdc9201.svg",
     "static/media/typing.gif": "/static/media/typing.593f861456397bd3e8ff.gif",
     "static/media/send-message.png": "/static/media/send-message.cce7f972efaf9447fcdf.png",
+    "static/media/hangUp.png": "/static/media/hangUp.a38253111d1c946b4cfe.png",
     "static/media/user-avatar.png": "/static/media/user-avatar.0653f26b761ea04649b5.png",
     "static/media/notificationSound.mp3": "/static/media/notificationSound.212ef94280d529ef34cf.mp3",
     "index.html": "/index.html",
-    "main.2b02c0be.css.map": "/static/css/main.2b02c0be.css.map",
-    "main.f7bc9b60.js.map": "/static/js/main.f7bc9b60.js.map"
+    "main.b1ead002.css.map": "/static/css/main.b1ead002.css.map",
+    "main.b13a5b72.js.map": "/static/js/main.b13a5b72.js.map"
   },
   "entrypoints": [
-    "static/css/main.2b02c0be.css",
-    "static/js/main.f7bc9b60.js"
+    "static/css/main.b1ead002.css",
+    "static/js/main.b13a5b72.js"
   ]
 }
