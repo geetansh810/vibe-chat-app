@@ -11,6 +11,8 @@ import Login from './pages/Login'
 
 import { Provider } from 'react-redux'
 import store from './store'
+import VideoCall from './components/VideoCall';
+import IncomingCall from './components/IncomingCall';
 
 const Routes = () => {
     const [isActive, setActive] = useState(false);
@@ -51,7 +53,8 @@ const Routes = () => {
                             <Login loader={loader} />
                         </LoginRoutes>
                     } />
-
+                    <Route path='/call/ongoing' element={<VideoCall />} />
+                    <Route path='/call/incoming' element={<IncomingCall />} />
                 </Switch>
             </LoadingOverlay>
         </Router>

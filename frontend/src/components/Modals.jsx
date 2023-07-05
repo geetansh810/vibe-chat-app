@@ -96,9 +96,9 @@ const Modals = ({ newChat, changeGrpName, addParticipants, createNewGroupChat })
                         <div className="modal-dialog">
                             <div className="modal-content bg-dark">
                                 <button type="button" className="bg-light btn-close ms-auto p-3 rounded" data-bs-dismiss="modal" aria-label="Close"></button>
-                                <div class="profile-container">
-                                    <div class="cards">
-                                        <div class="imgBox">
+                                <div className="profile-container">
+                                    <div className="cards">
+                                        <div className="imgBox">
                                             <img
                                                 src={
                                                     selectedChat.isGroupChat ? groupImage :
@@ -109,8 +109,8 @@ const Modals = ({ newChat, changeGrpName, addParticipants, createNewGroupChat })
                                                 alt='profileImage'
                                             />
                                         </div>
-                                        <div class="content">
-                                            <div class="details">
+                                        <div className="content">
+                                            <div className="details">
                                                 <h2>
                                                     {
                                                         selectedChat.isGroupChat ?
@@ -121,18 +121,18 @@ const Modals = ({ newChat, changeGrpName, addParticipants, createNewGroupChat })
                                                                 : selectedChat.users[0].firstName + " " + selectedChat.users[0].lastName
                                                     }
                                                 </h2>
-                                                {/* <ul class="social_icons">
+                                                {/* <ul className="social_icons">
                                                 <li>
-                                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                                    <a href="#"><i className="fab fa-facebook-f"></i></a>
                                                 </li>
                                                 <li>
-                                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                                    <a href="#"><i className="fab fa-twitter"></i></a>
                                                 </li>
                                                 <li>
-                                                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                                                    <a href="#"><i className="fab fa-linkedin"></i></a>
                                                 </li>
                                                 <li>
-                                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                                    <a href="#"><i className="fab fa-instagram"></i></a>
                                                 </li>
                                             </ul> */}
                                             </div>
@@ -324,16 +324,16 @@ const Modals = ({ newChat, changeGrpName, addParticipants, createNewGroupChat })
                 <div className="modal-dialog">
                     <div className="modal-content bg-dark">
                         <button type="button" className="bg-light btn-close ms-auto p-3 rounded" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <div class="profile-container">
-                            <div class="cards">
-                                <div class="imgBox">
+                        <div className="profile-container">
+                            <div className="cards">
+                                <div className="imgBox">
                                     <img
                                         src={userDetails.photo}
                                         alt='profileImage'
                                     />
                                 </div>
-                                <div class="content">
-                                    <div class="details">
+                                <div className="content">
+                                    <div className="details">
                                         <h2>
                                             {userDetails.name}
                                             <br />
@@ -341,18 +341,18 @@ const Modals = ({ newChat, changeGrpName, addParticipants, createNewGroupChat })
                                             <br />
                                             <span>{userDetails.email}</span>
                                         </h2>
-                                        {/* <ul class="social_icons">
+                                        {/* <ul className="social_icons">
                                                 <li>
-                                                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                                    <a href="#"><i className="fab fa-facebook-f"></i></a>
                                                 </li>
                                                 <li>
-                                                    <a href="#"><i class="fab fa-twitter"></i></a>
+                                                    <a href="#"><i className="fab fa-twitter"></i></a>
                                                 </li>
                                                 <li>
-                                                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                                                    <a href="#"><i className="fab fa-linkedin"></i></a>
                                                 </li>
                                                 <li>
-                                                    <a href="#"><i class="fab fa-instagram"></i></a>
+                                                    <a href="#"><i className="fab fa-instagram"></i></a>
                                                 </li>
                                             </ul> */}
                                     </div>

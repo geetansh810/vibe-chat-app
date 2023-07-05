@@ -27,7 +27,8 @@ app.use("/api/user", userRoutes)
 app.use("/api/chat", chatRoutes)
 app.use("/api/message", messageRoutes);
 
-const { notFound, errorHandler } = require("./middlewares/errorMiddlewares")
+const { notFound, errorHandler } = require("./middlewares/errorMiddlewares");
+const { log } = require("console");
 
 // --------------------------Deployement----------------------------
 
@@ -102,6 +103,24 @@ io.on("connection", (socket) => {
             // console.log(user);
             socket.to(user._id).emit("message recieved", newMessageRecieved)
         })
+    })
+
+
+    socket.on("callUser", (data) => {
+        console.log("user called");
+        console.log("user to call : ", data.userToCall);
+        console.log("from : ", data.from);
+        console.log("from name : ", data.name);
+        io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
+    })
+
+    socket.on("answerCall", (data) => {
+        console.log("Answer call");
+        io.to(data.to).emit("callAccepted", data.signal)
+    })
+
+    socket.on("hello", () => {
+        console.log("Hello");
     })
 
     socket.off("setup", () => {
