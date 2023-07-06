@@ -284,10 +284,11 @@ const Home = ({ loader }) => {
     const [idToCall, setIdToCall] = useState("")
     const [callEnded, setCallEnded] = useState(false)
     const [name, setName] = useState("")
-    const [requestCall, setRequestCall] = useState(false)
+    const [callerPhoto, setCallerPhoto] = useState("")
     const myVideo = useRef()
     const userVideo = useRef()
     const connectionRef = useRef()
+    var userMed;
 
     useEffect(() => {
         socket.on("callUser", (data) => {
@@ -299,11 +300,14 @@ const Home = ({ loader }) => {
             })
             incomingCallModal.show()
 
-
             setReceivingCall(true)
             setCaller(data.from)
             setName(data.name)
+            setCallerPhoto(data.photo)
             setCallerSignal(data.signal)
+        })
+        socket.on("endCall", () => {
+            endVideo()
         })
     })
 
@@ -316,6 +320,7 @@ const Home = ({ loader }) => {
             .then((stream) => {
                 console.log("Media Enabled");
                 setStream(stream)
+                userMed = stream
                 myVideo.current.srcObject = stream
                 return true
             }).catch((err) => {
@@ -326,66 +331,36 @@ const Home = ({ loader }) => {
 
     }
 
-    // useEffect(() => {
-    //     console.log("outside");
-    //     if (myVideo.current !== undefined && showVideo) {
-    //         console.log("inside");
-    //         myVideo.current.srcObject = stream
-    //     }
-    // })
-
-    // var videoModal = document.getElementById('videoCallModal')
-    // // console.log(videoModal);
-    // useEffect(() => {
-    //     if (videoModal !== null) {
-    //         console.log("hello");
-    //         videoModal.addEventListener('hidden.bs.modal', function () {
-    //             // setShowVideo(false)
-    //             console.log(stream);
-    //             // stream.getTracks().forEach(function (track) {
-    //             //     track.stop();
-    //             // });
-    //         })
-    //     }
-
-    // }, [videoModal])
-
-    const endVideo = () => {
-        console.log("End call");
-        stream.getTracks().forEach(function (track) {
-            track.stop();
-        });
-        leaveCall()
-    }
-
-    const callUser = async (id, me, name) => {
+    const callUser = async (id, me, name, photo) => {
         console.log(id, me, name);
-
+        setCaller(id)
         const mediaPermission = await getUserMedia()
         if (!mediaPermission) {
             return;
         }
         setShowVideo(true)
-
         var videoCallModal = new bootstrapMin.Modal(document.getElementById('videoCallModal'), {
             keyboard: false
         })
         videoCallModal.show()
 
+        console.log(stream);
         const peer = new Peer({
             initiator: true,
             trickle: false,
-            stream: stream
+            stream: userMed
         })
         peer.on("signal", (data) => {
             socket.emit("callUser", {
                 userToCall: id,
                 signalData: data,
                 from: me,
-                name: name
+                name: name,
+                photo: photo
             })
         })
         peer.on("stream", (stream) => {
+            console.log("user stream");
             userVideo.current.srcObject = stream
         })
         socket.on("callAccepted", (signal) => {
@@ -400,20 +375,20 @@ const Home = ({ loader }) => {
     const answerCall = async () => {
         console.log("You accepted the call");
         setCallAccepted(true)
-        setRequestCall(false)
         setShowVideo(true)
-
+        playIncomingAudio(false)
         const mediaPermission = await getUserMedia()
         if (!mediaPermission) {
             return;
         }
         setShowVideo(true)
 
-        var incomingCallModal = new bootstrapMin.Modal(document.getElementById('incomingCallModal'), {
-            keyboard: false
-        })
+        // var incomingCallModal = new bootstrapMin.Modal(document.getElementById('incomingCallModal'), {
+        //     keyboard: false
+        // })
+        // console.log(incomingCallModal);
 
-        incomingCallModal.hide()
+        // incomingCallModal.hide()
 
         var videoCallModal = new bootstrapMin.Modal(document.getElementById('videoCallModal'), {
             keyboard: false
@@ -423,26 +398,43 @@ const Home = ({ loader }) => {
         const peer = new Peer({
             initiator: false,
             trickle: false,
-            stream: stream
+            stream: userMed
         })
 
         peer.on("signal", (data) => {
+            console.log("signal");
             socket.emit("answerCall", { signal: data, to: caller })
         })
         peer.on("stream", (stream) => {
-            console.log(stream);
+            console.log("stream");
             userVideo.current.srcObject = stream
         })
         peer.signal(callerSignal)
         connectionRef.current = peer
     }
 
-    const leaveCall = () => {
-        console.log("Call ended");
+    const endVideo = () => {
+        console.log("End call");
+        toast("Call ended")
+        socket.emit("callEnded", { to: caller })
         setCallEnded(true)
+        // console.log(connectionRef.current);
         connectionRef.current.destroy()
-    }
 
+        stream.getTracks().forEach(function (track) {
+            track.stop();
+        });
+
+        const allModals = document.getElementsByClassName('modal');
+        Array.from(allModals).forEach((mod) => {
+            mod.classList.remove('show')
+            console.log(mod);
+        })
+        const allModalBackdrops = document.getElementsByClassName("modal-backdrop")
+        Array.from(allModalBackdrops).forEach((mod) => {
+            mod.remove()
+        })
+    }
 
     function goToPage(pageName) {
         console.log("Page:" + pageName);
@@ -514,16 +506,20 @@ const Home = ({ loader }) => {
     //     setGroupMembers(res)
     // }
 
-    const playIncomingAudio = () => {
-        console.log('button clicked');
-        const audio = new Audio(callRing)
-        audio.addEventListener("canplaythrough", () => {
-            audio.play().catch(e => {
-                window.addEventListener('click', () => {
-                    audio.play()
-                })
-            })
-        });
+    const audio = new Audio(callRing)
+    const playIncomingAudio = (toPlay) => {
+        if (!toPlay) {
+            audio.pause()
+        } else {
+            console.log("Play sound");
+            audio.addEventListener("canplaythrough", () => {
+                audio.play().catch(e => {
+                    window.addEventListener('click', () => {
+                        audio.play()
+                    })
+                }, { once: true })
+            });
+        }
     }
 
     const sayHello = () => {
@@ -601,7 +597,7 @@ const Home = ({ loader }) => {
                 <div className="modal-dialog ">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Video Call</h5>
+                            <h5 className="modal-title" id="exampleModalLabel">{ }</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"
                                 onClick={endVideo}
                             ></button>
@@ -610,17 +606,20 @@ const Home = ({ loader }) => {
                             <div className='incoming-call'>
                                 <div className='mt-5 bg-light px-4 py-2 rounded'>
                                     <h5 className='fw-bolder'>
-                                        Geetansh Agrawal
+                                        {caller}
                                     </h5>
                                 </div>
                                 <div className="call-animation">
-                                    <img className="img-circle" src={user.photo} alt="" width="135" />
+                                    <img className="img-circle" src={callerPhoto} alt="" width="135" />
                                 </div>
                                 <div className='pb-5 ps-5'>
                                     <button className='call-button btn btn-outline-danger bg-light rounded-pill mx-3 p-2' >
                                         <img src={hangUp} alt='hangup' />
                                     </button>
-                                    <button className='call-button btn btn-light rounded-pill mx-3 incoming-btn mt-0' onClick={answerCall}>
+                                    <button className='call-button btn btn-light rounded-pill mx-3 incoming-btn mt-0'
+                                        data-bs-dismiss="modal" aria-label="Close"
+                                        onClick={answerCall}
+                                    >
                                         <Lottie animationData={hangOn} />
                                     </button>
                                 </div>
@@ -655,7 +654,7 @@ const Home = ({ loader }) => {
                                                 </svg>
                                             </span>
                                         </button>
-                                        <span className="name">Geetansh Agrawal</span>
+                                        <span className="name">{name}</span>
                                     </div>
                                     <div className="ui-container">
                                         <div className="navigation-controls-container">
@@ -687,9 +686,9 @@ const Home = ({ loader }) => {
                                                     </svg>
                                                 </span>
                                             </button>
-                                            {/* <button className='call-button bg-light rounded-pill'>
+                                            <button className='call-button bg-light rounded-pill' onClick={() => endVideo()}>
                                                 <img src={hangUp} alt='hangup' />
-                                            </button> */}
+                                            </button>
                                         </div>
                                     </div>
                                     <div className="cam-container">

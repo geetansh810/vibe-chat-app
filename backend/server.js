@@ -111,7 +111,7 @@ io.on("connection", (socket) => {
         console.log("user to call : ", data.userToCall);
         console.log("from : ", data.from);
         console.log("from name : ", data.name);
-        io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name })
+        io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from, name: data.name, photo: data.photo })
     })
 
     socket.on("answerCall", (data) => {
@@ -119,8 +119,8 @@ io.on("connection", (socket) => {
         io.to(data.to).emit("callAccepted", data.signal)
     })
 
-    socket.on("hello", () => {
-        console.log("Hello");
+    socket.on("callEnded", (data) => {
+        io.to(data.to).emit("endCall")
     })
 
     socket.off("setup", () => {
