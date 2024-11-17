@@ -170,7 +170,7 @@ const ConversationDetails = ({ removeParticipant, goToPage, callUser }) => {
                         <div className="text-secondary">Mobile - {
                             userDetails._id === selectedChat.users[1]._id ?
                                 selectedChat.users[0].mobileNumber
-                                : selectedChat.users[0].mobileNumber
+                                : selectedChat.users[1].mobileNumber
                         }</div>
                     </>
 

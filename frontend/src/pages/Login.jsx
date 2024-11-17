@@ -52,7 +52,7 @@ const Login = ({ loader }) => {
             // console.log(data.hasOwnProperty("error"));
             loader(false);
             if (data.hasOwnProperty("error")) {
-                toast(data.error.message);
+                toast(data.message);
                 return;
             }
             toast(`Welcome ${data.user.name}`)
@@ -134,7 +134,7 @@ const Login = ({ loader }) => {
             }
 
             toast(data.message)
-            toast("Please login")
+            toast("User created successfully, Please login")
             // console.log(data);
 
             // if (data.hasOwnProperty("error")) {

@@ -294,12 +294,12 @@ const Home = ({ loader }) => {
         socket.on("callUser", (data) => {
             console.log("Some one is calling you");
             document.getElementById('incomingAudio').click()
-
+            console.log(data);
+            
             var incomingCallModal = new bootstrapMin.Modal(document.getElementById('incomingCallModal'), {
                 keyboard: false
             })
             incomingCallModal.show()
-
             setReceivingCall(true)
             setCaller(data.from)
             setName(data.name)
@@ -419,11 +419,13 @@ const Home = ({ loader }) => {
         socket.emit("callEnded", { to: caller })
         setCallEnded(true)
         // console.log(connectionRef.current);
-        connectionRef.current.destroy()
+        // connectionRef.current.destroy()
 
-        stream.getTracks().forEach(function (track) {
-            track.stop();
-        });
+        if(stream){
+            stream.getTracks().forEach(function (track) {
+                track.stop();
+            });
+        }
 
         const allModals = document.getElementsByClassName('modal');
         Array.from(allModals).forEach((mod) => {
@@ -434,6 +436,12 @@ const Home = ({ loader }) => {
         Array.from(allModalBackdrops).forEach((mod) => {
             mod.remove()
         })
+        setShowVideo(false)
+        var videoCallModal = new bootstrapMin.Modal(document.getElementById('videoCallModal'), {
+            keyboard: false
+        })
+        videoCallModal.hide()
+        videoCallModal._hideModal();
     }
 
     function goToPage(pageName) {
@@ -606,7 +614,7 @@ const Home = ({ loader }) => {
                             <div className='incoming-call'>
                                 <div className='mt-5 bg-light px-4 py-2 rounded'>
                                     <h5 className='fw-bolder'>
-                                        {caller}
+                                        {name}
                                     </h5>
                                 </div>
                                 <div className="call-animation">

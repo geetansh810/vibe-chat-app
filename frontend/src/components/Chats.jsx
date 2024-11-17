@@ -10,7 +10,7 @@ const Chats = ({ selectChat }) => {
         // var curr = new Date()
         // console.log(curr.toLocaleTimeString() + " " + date.toLocaleTimeString());
         // console.log(date.getDate() + " " + date.toLocaleString('default', { month: 'long' }) + " " + date.getFullYear() + " " + date.toLocaleTimeString())
-        const lastTime = date.toLocaleTimeString().split(":")[0] + ":" + date.toLocaleTimeString().split(":")[1] + " " + date.toLocaleTimeString().split(":")[2].split(" ")[1];
+        const lastTime = date.toLocaleTimeString().split(":")[0] + ":" + date.toLocaleTimeString().split(":")[1];
         return lastTime
     }
 
@@ -38,7 +38,7 @@ const Chats = ({ selectChat }) => {
                         }</div>
                         <div className="msg-content">
                             <span className="msg-message me-1 text-primary">{chat.latestMessage && chat.latestMessage.sender._id === userDetails._id ? <i className="fa-solid fa-check"></i> : ""}</span>
-                            <span className="msg-message">{chat.latestMessage ? chat.latestMessage.content.slice(0, 20) + "..." : "Start your conversation"}</span>
+                            <span className="msg-message">{chat.latestMessage ? chat.latestMessage.content.slice(0, 20) + "..." : "Let's vibe"}</span>
                             <span className="msg-date ">{convertDate(chat.updatedAt)}</span>
                         </div>
                     </div>
